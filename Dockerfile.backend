@@ -1,0 +1,7 @@
+FROM maven:3.8.1-openjdk-17-slim
+WORKDIR /app
+# Expose port 8080 and the remote debugging port 5005
+EXPOSE 8080 5005
+
+# Run the Spring Boot application with remote debugging enabled
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.fork=true"]

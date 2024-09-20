@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="sondes oueslati">
+        <createTable tableName="course">
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="nom" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="partant">
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id-course" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_partant_course"
+                             references="course(id)"/>
+            </column>
+            <column name="nom" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero" type="integer">
+              <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <!-- Rollback: Drop the partant table -->
+            <dropTable tableName="partant"/>
+
+            <!-- Rollback: Drop the course table -->
+            <dropTable tableName="course"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
